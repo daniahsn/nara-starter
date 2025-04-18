@@ -670,6 +670,40 @@ document.addEventListener("DOMContentLoaded", () => {
         const originalIndex = tasks.indexOf(task);
         tasks[originalIndex].completed = checkbox.checked;
 
+        // 💬 Only show encouragement when a task is checked
+      if (checkbox.checked) {
+        const encouragementMessages = [
+          "Great job!",
+          "You’re making progress!",
+          "So proud of you!",
+          "You got this!",
+          "Keep going!",
+          "Amazing work!",
+          "✨ Look at you shine ✨",
+          "You’re unstoppable!"
+        ];
+
+        const randomMsg = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
+
+        const bubble = document.createElement("div");
+        bubble.className = "speech-bubble";
+        bubble.textContent = randomMsg;
+
+        bubble.style.top = "100px";
+        bubble.style.right = "60px";
+        document.body.appendChild(bubble);
+
+        // Trigger fade-in effect
+        requestAnimationFrame(() => {
+          bubble.classList.add("fade-in");
+        });
+
+        setTimeout(() => {
+          bubble.classList.add("fade-out");
+          bubble.addEventListener("transitionend", () => bubble.remove());
+        }, 2500);
+      }
+
         if (tasks[originalIndex].completed) {
           const deleteButton = taskItem.querySelector(".delete-task");
           if (deleteButton) deleteButton.remove();
