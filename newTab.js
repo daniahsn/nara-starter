@@ -5,24 +5,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ✨ Inspirational Quote Overlay
   const quotes = [
-    "Believe in yourself and all that you are.",
-    "Every moment is a fresh beginning.",
-    "Start where you are. Use what you have. Do what you can.",
-    "You are stronger than you think.",
-    "Progress, not perfection.",
-    "One step at a time.",
-    "The best time for new beginnings is now.",
-    "Let your light shine.",
-    "Today is full of potential.",
-    "You’ve got this 💪"
+    "🌱 Believe in yourself even when no one else sees your worth.",
+    "🌈 Every new day is a chance to rewrite your story again.",
+    "🧠 Your small steps today will become your giant leap tomorrow.",
+    "💪 Strength doesn't always roar—sometimes it's the quiet push forward.",
+    "✨ Progress is made not in bursts, but in steady belief.",
+    "🚶 Growth is slow, messy, and worth every moment you give it.",
+    "🌸 Be proud of how far you’ve come, not just how far you have left.",
+    "🌟 You don’t need to have it all figured out right now.",
+    "🦋 Rest is part of the journey, not a sign of failure.",
+    "📚 You are the author of a story still unfolding with magic.",
+    "🕊️ What feels like a detour is often the beginning of clarity.",
+    "🫶 You deserve kindness, especially from yourself, on the hard days.",
+    "🍃 Let go of who you were to grow into who you are."
   ];
 
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   const quoteOverlay = document.createElement("div");
   quoteOverlay.className = "quote-overlay";
-  quoteOverlay.textContent = quote;
+  quoteOverlay.className = "quote-overlay";
+  quoteOverlay.style.opacity = "0"; // start hidden
   document.body.appendChild(quoteOverlay);
+  function typeWriterEffect(text, element, speed = 50) {
+    let i = 0;
+  
+    // Fade in the element right before the first character types
+    setTimeout(() => {
+      element.style.opacity = "1";
+    }, 50);
+  
+    function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+  
+    type();
+  }
+    // Wait for DOM paint, then fade in + type
+  setTimeout(() => {
+    quoteOverlay.style.opacity = "1"; // manual fade-in trigger
+    typeWriterEffect(quote, quoteOverlay); // start typing AFTER it's faded
+  }, 200); // 200ms delay ensures no pre-written text appears
 
   const categoriesContainer = document.getElementById("categories-container");
   const tasksContainer = document.getElementById("tasks-container");

@@ -524,8 +524,8 @@ transform: translateY(-20px); /* Float up & disappear */
     color: #333;
     padding: 14px 20px;
     border-radius: 10px;
-    font-size: 2rem;
-    font-family: 'Slackside One', cursive;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
     font-style: italic;
     box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
     max-width: 280px;
@@ -544,4 +544,16 @@ transform: translateY(-20px); /* Float up & disappear */
       opacity: 1;
       transform: translateY(0) rotate(-1.5deg);
     }
+  }
+
+  .quote-overlay::after {
+    content: "|";
+    animation: blink 1s infinite;
+    color: #666;
+    font-weight: normal;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
