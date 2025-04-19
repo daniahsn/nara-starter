@@ -3,6 +3,27 @@ document.addEventListener("DOMContentLoaded", () => {
   backgroundContainer.className = "background-container";
   document.body.appendChild(backgroundContainer);
 
+  // ✨ Inspirational Quote Overlay
+  const quotes = [
+    "Believe in yourself and all that you are.",
+    "Every moment is a fresh beginning.",
+    "Start where you are. Use what you have. Do what you can.",
+    "You are stronger than you think.",
+    "Progress, not perfection.",
+    "One step at a time.",
+    "The best time for new beginnings is now.",
+    "Let your light shine.",
+    "Today is full of potential.",
+    "You’ve got this 💪"
+  ];
+
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  const quoteOverlay = document.createElement("div");
+  quoteOverlay.className = "quote-overlay";
+  quoteOverlay.textContent = quote;
+  document.body.appendChild(quoteOverlay);
+
   const categoriesContainer = document.getElementById("categories-container");
   const tasksContainer = document.getElementById("tasks-container");
   const taskList = document.getElementById("task-list");
