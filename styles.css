@@ -489,32 +489,6 @@ input[type="checkbox"]:checked+.task-text {
     animation: welcomeFadeIn 1s ease-out forwards;
     }
 
-.speech-bubble {
-    position: fixed;
-    background: white;
-    color: #333;
-    padding: 12px 18px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-size: 1.2rem;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    z-index: 9999;
-    opacity: 0; /* Start invisible */
-    transform: translateY(10px); /* Slight downward start */
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    
-.speech-bubble.fade-in {
-opacity: 1;
-transform: translateY(0); /* Float up slightly */
-}
-
-.speech-bubble.fade-out {
-opacity: 0;
-transform: translateY(-20px); /* Float up & disappear */
-}
-
 /* Inspirational Quote Overlay */
 .quote-overlay {
     position: fixed;
@@ -556,4 +530,50 @@ transform: translateY(-20px); /* Float up & disappear */
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+/* 😄 Mood Selection Styles */
+#mood-container {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.75);
+    padding: 10px 16px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    z-index: 999;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .mood-prompt {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    color: #374151;
+  }
+  
+  .mood-options {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .mood-emoji {
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+  
+  .mood-emoji:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .selected-mood {
+    border: 2px solid #4CAF50;
+    background-color: #e9fbe9;
   }

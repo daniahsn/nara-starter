@@ -175,6 +175,41 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
+  
+  function showMoodPrompt() {
+    const moodContainer = document.createElement("div");
+    moodContainer.id = "mood-container";
+    moodContainer.innerHTML = `
+      <p class="mood-prompt">🌤️ How are you feeling today?</p>
+      <div class="mood-options">
+        <span class="mood-emoji" data-mood="happy">😊</span>
+        <span class="mood-emoji" data-mood="neutral">😐</span>
+        <span class="mood-emoji" data-mood="sad">😣</span>
+      </div>
+    `;
+    document.body.appendChild(moodContainer);
+  
+    document.querySelectorAll(".mood-emoji").forEach((emoji) => {
+      emoji.addEventListener("click", () => {
+        const mood = emoji.dataset.mood;
+        chrome.storage.local.set({ mood: mood }, () => {
+          console.log("Mood saved:", mood);
+        });
+  
+        document.querySelectorAll(".mood-emoji").forEach((e) =>
+          e.classList.remove("selected-mood")
+        );
+        emoji.classList.add("selected-mood");
+      });
+    });
+  
+    chrome.storage.local.get("mood", (data) => {
+      if (data.mood) {
+        const selected = document.querySelector(`[data-mood="${data.mood}"]`);
+        if (selected) selected.classList.add("selected-mood");
+      }
+    });
+  }
   function removeAllListeners() {
     hoverListeners.forEach((listener) => {
       document.removeEventListener("mousemove", listener);
@@ -436,6 +471,8 @@ document.addEventListener("DOMContentLoaded", () => {
           categoriesContainer.classList.add("hidden");
           hideHoverCircles(); // Hide hover circles when the final image is shown
           document.getElementById("welcome-message").classList.add("hidden");
+          const moodElement = document.getElementById("mood-container");
+          if (moodElement) moodElement.remove();
 
           // Create and show thank you message
           const thankYouMessage = document.createElement("div");
@@ -457,8 +494,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       //categoriesContainer.classList.remove("hidden");
       document.getElementById("welcome-message").classList.remove("hidden");
-      showHoverCircles(); // Show hover circles in the initial state
-      changeBackgroundWithSlide(initialBackground);
+      showMoodPrompt();
+      changeBackgroundWithSlide(initialBackground);  // ✅ ← THIS LINE
     }
   });
 
@@ -514,6 +551,11 @@ document.addEventListener("DOMContentLoaded", () => {
       categoriesContainer.classList.add("hidden");
       hideHoverCircles();
       document.getElementById("welcome-message").classList.add("hidden");
+      const moodElement = document.getElementById("mood-container");
+      if (moodElement) {
+        console.log("Removing mood element"); // for debugging
+        moodElement.remove();
+      }
     }
   });
 
@@ -556,6 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset the UI to the initial state
     tasksContainer.classList.add("hidden");
     document.getElementById("welcome-message").classList.remove("hidden");
+    showMoodPrompt();
     changeBackgroundWithSlide(initialBackground);
 
     // Remove thank you message if it exists
@@ -717,40 +760,6 @@ document.addEventListener("DOMContentLoaded", () => {
       checkbox.addEventListener("change", () => {
         const originalIndex = tasks.indexOf(task);
         tasks[originalIndex].completed = checkbox.checked;
-
-        // 💬 Only show encouragement when a task is checked
-      if (checkbox.checked) {
-        const encouragementMessages = [
-          "Great job!",
-          "You’re making progress!",
-          "So proud of you!",
-          "You got this!",
-          "Keep going!",
-          "Amazing work!",
-          "✨ Look at you shine ✨",
-          "You’re unstoppable!"
-        ];
-
-        const randomMsg = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
-
-        const bubble = document.createElement("div");
-        bubble.className = "speech-bubble";
-        bubble.textContent = randomMsg;
-
-        bubble.style.top = "100px";
-        bubble.style.right = "60px";
-        document.body.appendChild(bubble);
-
-        // Trigger fade-in effect
-        requestAnimationFrame(() => {
-          bubble.classList.add("fade-in");
-        });
-
-        setTimeout(() => {
-          bubble.classList.add("fade-out");
-          bubble.addEventListener("transitionend", () => bubble.remove());
-        }, 2500);
-      }
 
         if (tasks[originalIndex].completed) {
           const deleteButton = taskItem.querySelector(".delete-task");
